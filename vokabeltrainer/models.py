@@ -17,3 +17,6 @@ class Vokabel(models.Model):
     vokabel_sets = models.ManyToManyField(to=VokabelSet, related_name='vokabeln')
     # ToDo  add later
     # synonyms = models.ManyToManyField(to='self', related_name='synonyms')
+
+    def __str__(self):
+        return f'{self.english} - {self.german}'
