@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Vokabeln</h2>
+    <ul>
+        <li><a href="{% url 'new_vokabel' %}">Neue Vokabel dazu</a>
+</li>
+        {% for vokabel in words_to_learn %}
+            <li><a href="{% url 'update_vokabel' vokabel.id %}"> {{ vokabel.english }} </a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

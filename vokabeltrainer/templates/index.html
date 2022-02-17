@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Test{% endblock %}
+
+{% block heading %}
+
+  <h2>Hallo
+    {% if user.is_authenticated %}
+      {{ user.username }}
+    {% else %}
+        Fremdling
+    {% endif %}
+  </h2>
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+      Schön, dass du da bist.
+    {% else %}
+        Bitte gehen Sie weiter, es gibt hier nix zu sehen.
+    {% endif %}
+{% endblock %}

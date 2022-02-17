@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>VokabelSets</h2>
+    <ul>
+        <li><a href="{% url 'new_vokabel_set' %}">Neues VokabelSet dazu</a>
+</li>
+        {% for vokabel_set in vokabel_set_list %}
+            <li><a href="{% url 'update_vokabel_set' vokabel_set.id %}"> {{ vokabel_set.name }} </a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
