@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from vokabeltrainer.models import Vokabel, VokabelSet
+from vokabeltrainer.models.vokabel_models import VokabelSet
 
 
 class VokabelSetListView(ListView):
