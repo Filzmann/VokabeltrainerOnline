@@ -23,4 +23,4 @@ class VokabelSetUpdateView(UpdateView):
 
 class VokabelSetDeleteView(DeleteView):
     model = VokabelSet
-    success_url = reverse_lazy('list_vokabels')
+    success_url = reverse_lazy('list_vokabel_set')
