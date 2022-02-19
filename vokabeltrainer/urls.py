@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path
 
 from vokabeltrainer.views.index import IndexView
+from vokabeltrainer.views.lernen import LernenView
 from vokabeltrainer.views.vokabel_set_views import (
     VokabelSetListView, VokabelSetCreateView,
     VokabelSetUpdateView, VokabelSetDeleteView
@@ -27,10 +28,15 @@ from vokabeltrainer.views.vokabel_views import (
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
+
+    path('lernen', LernenView.as_view(), name='lernen'),
+    path('lernen/<int:set_id>', LernenView.as_view(), name='lernen'),
+
     path('vokabel/', VokabelListView.as_view(), name='list_vokabel'),
     path('vokabel/add/', VokabelCreateView.as_view(), name='new_vokabel'),
     path('vokabel/<int:pk>/', VokabelUpdateView.as_view(), name='update_vokabel'),
     path('vokabel/<int:pk>/delete/', VokabelDeleteView.as_view(), name='delete_vokabel'),
+
     path('vokabelset/', VokabelSetListView.as_view(), name='list_vokabel_set'),
     path('vokabelset/add/', VokabelSetCreateView.as_view(), name='new_vokabel_set'),
     path('vokabelset/<int:pk>/', VokabelSetUpdateView.as_view(), name='update_vokabel_set'),
