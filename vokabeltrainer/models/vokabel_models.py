@@ -15,10 +15,9 @@ class VokabelSet(models.Model):
 class Vokabel(models.Model):
     english = models.CharField(max_length=255)
     german = models.CharField(max_length=255)
-    english_description = models.TextField()
+    english_description = models.TextField(default='')
+    example_sentences = models.TextField(default='')
     vokabel_sets = models.ManyToManyField(to=VokabelSet, related_name='vokabeln', null=True, blank=True)
-    # ToDo  add later
-    # synonyms = models.ManyToManyField(to='self', related_name='synonyms')
 
     def __str__(self):
         return f'{self.english} - {self.german}'

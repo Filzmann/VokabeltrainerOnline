@@ -11,13 +11,13 @@ class VokabelListView(ListView):
 
 class VokabelCreateView(CreateView):
     model = Vokabel
-    fields = ['english', 'german', 'english_description', 'vokabel_sets']
+    fields = ['english', 'german', 'english_description', 'example_sentences', 'vokabel_sets']
     success_url = reverse_lazy('list_vokabel')
 
 
 class VokabelUpdateView(UpdateView):
     model = Vokabel
-    fields = ['english', 'german', 'english_description', 'vokabel_sets']
+    fields = ['english', 'german', 'english_description', 'example_sentences', 'vokabel_sets']
     success_url = reverse_lazy('list_vokabel_set')
 
 
