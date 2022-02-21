@@ -12,6 +12,28 @@ class VokabelSet(models.Model):
         return self.name
 
 
+class LobUndAufmunterung(models.Model):
+    LOB = 'LO'
+    AUF = 'AU'
+    CHOICES = [
+        (LOB, 'Lob für richtiges Ergebnis'),
+        (AUF, 'Aufmunterung bei falschem Ergebnis'),
+    ]
+    type = models.CharField(
+        max_length=2,
+        choices=CHOICES,
+        default=LOB,
+    )
+    text = models.TextField(default='')
+
+    @classmethod
+    def get_random(cls, l_type):
+        query = cls.objects.filter(type=l_type)
+        liste = list(query)
+
+        return random.sample(liste, 1)[0]
+
+
 class Vokabel(models.Model):
     english = models.CharField(max_length=255)
     german = models.CharField(max_length=255)
@@ -31,6 +53,3 @@ class Vokabel(models.Model):
         liste = list(query)
 
         return random.sample(liste, 1)[0]
-
-
-

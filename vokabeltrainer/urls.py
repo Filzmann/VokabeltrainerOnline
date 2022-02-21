@@ -18,6 +18,9 @@ from django.urls import path
 from vokabeltrainer.views.index import IndexView
 from vokabeltrainer.views.lernen import LernenView
 from vokabeltrainer.views.lernen_ergebnis import LernenErgebnisView
+from vokabeltrainer.views.lob_und_aufmunterung_views import (
+    LobUndAufmunterungListView, LobUndAufmunterungCreateView,
+    LobUndAufmunterungUpdateView, LobUndAufmunterungDeleteView)
 from vokabeltrainer.views.vokabel_set_views import (
     VokabelSetListView, VokabelSetCreateView,
     VokabelSetUpdateView, VokabelSetDeleteView
@@ -43,6 +46,10 @@ urlpatterns = [
     path('vokabelset/', VokabelSetListView.as_view(), name='list_vokabel_set'),
     path('vokabelset/add/', VokabelSetCreateView.as_view(), name='new_vokabel_set'),
     path('vokabelset/<int:pk>/', VokabelSetUpdateView.as_view(), name='update_vokabel_set'),
-    path('vokabelset/<int:pk>/delete/', VokabelSetDeleteView.as_view(), name='delete_vokabel_set')
+    path('vokabelset/<int:pk>/delete/', VokabelSetDeleteView.as_view(), name='delete_vokabel_set'),
 
+    path('lob/', LobUndAufmunterungListView.as_view(), name='list_lob'),
+    path('lob/add/', LobUndAufmunterungCreateView.as_view(), name='new_lob'),
+    path('lob/<int:pk>/', LobUndAufmunterungUpdateView.as_view(), name='update_lob'),
+    path('lob/<int:pk>/delete/', LobUndAufmunterungDeleteView.as_view(), name='delete_lob'),
 ]

@@ -3,7 +3,7 @@ from random import randrange
 import json
 from django.views.generic import TemplateView
 
-from vokabeltrainer.models.vokabel_models import Vokabel, VokabelSet
+from vokabeltrainer.models.vokabel_models import Vokabel, VokabelSet, LobUndAufmunterung
 
 
 class LernenErgebnisView(TemplateView):
@@ -31,13 +31,15 @@ class LernenErgebnisView(TemplateView):
         correct_answer = vokabel.english if lang_to_find == 'english' else vokabel.german
         correct_answers = correct_answer.replace(' ', '').split(',')
         if self.request.POST['answer'].replace(' ', '') in correct_answers:
-            print('korrekt')
+            # print('korrekt')
             context['solution_correct'] = True
-            context['message_text'] = "RICHTIGE Antwort! Du bist super!"
+            message=LobUndAufmunterung.get_random(l_type='LO')
+            context['message_text'] = message.text
         else:
-            print('wrong')
+            # print('wrong')
             context['solution_correct'] = False
-            context['message_text'] = "Leider ist das die FALSCHE Antwort! Nochmal versuchen!"
+            message = LobUndAufmunterung.get_random(l_type='AU')
+            context['message_text'] = message.text
 
         context['question'] = {
             'id': vokabel.id,
@@ -47,5 +49,5 @@ class LernenErgebnisView(TemplateView):
             'lang_to_find': lang_to_find,
             'examples': vokabel.example_sentences,
         }
-        print(context)
+        # print(context)
         return self.render_to_response(context)

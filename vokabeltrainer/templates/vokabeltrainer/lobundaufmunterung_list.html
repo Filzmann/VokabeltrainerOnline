@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Lob und Aufmunterung</h2>
+    <ul>
+        <li><a href="{% url 'new_lob' %}">Neues Lob/Aufmunterung</a>
+</li>
+        {% for lob in lob_list %}
+            <li>
+                <a href="{% url 'update_lob' lob.id %}">
+                    {% if lob.type == 'LO' %}
+                        Lob Nr. {{ lob.id }}
+                    {% else %}
+                        Aufmunterung Nr. {{ lob.id }}
+                    {% endif %}
+                    bearbeiten
+                    <div style="width: 15em;">{{ lob.text|safe }}</div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
