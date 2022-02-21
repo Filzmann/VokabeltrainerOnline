@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from vokabeltrainer.models import Vokabel
+from vokabeltrainer.models.vokabel_models import Vokabel
 
 
 class VokabelListView(ListView):
@@ -11,13 +11,13 @@ class VokabelListView(ListView):
 
 class VokabelCreateView(CreateView):
     model = Vokabel
-    fields = ['english', 'german', 'english_description', 'vokabel_sets']
+    fields = ['english', 'german', 'english_description', 'example_sentences', 'vokabel_sets']
     success_url = reverse_lazy('list_vokabel')
 
 
 class VokabelUpdateView(UpdateView):
     model = Vokabel
-    fields = ['english', 'german', 'english_description', 'vokabel_sets']
+    fields = ['english', 'german', 'english_description', 'example_sentences', 'vokabel_sets']
     success_url = reverse_lazy('list_vokabel_set')
 
 

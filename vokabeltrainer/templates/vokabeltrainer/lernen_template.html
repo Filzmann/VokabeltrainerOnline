@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Lernen</h2>
+{{ act_set_id }}
+    <ul>
+        <li><a href="{% url 'lernen' %}">Alle</a></li>
+    {% for set in sets %}
+        <li><a
+                {% if set.id == act_set_id %}
+                    style="font-weight: bolder;"
+                {% endif %}
+                href="{% url 'lernen' set.id %}">{{ set.name }}</a> </li>
+    {% endfor %}
+    </ul>
+
+    <div
+            {% if truefalse %}
+                style="color: green;"
+            {% else %}
+                style="color: red;"
+            {% endif %}>{{ truefalse_text }}</div>
+    <h4>
+        Wie übersetzt man
+        <span style="font-weight: bolder">"{{ question_set.question }}"</span>
+        in <span style="font-weight: bolder">{{ question_set.lang_to_find }} </span>?
+    </h4>
+    </p>
+    <div style="border: 1px solid black; max-width: 40em;">
+        <h5><a onclick="$('#hint').show();">Hinweis einblenden</a></h5>
+        <div id="hint">
+            {{ question_set.hint }}
+        </div>
+    </div>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="question_set" value="{{ question_set }}">
+        <input type="text" name="answer" placeholder="Antwort eintragen">
+        <input type="submit" value="Prüfen!">
+    </form>
+{% endblock %}
