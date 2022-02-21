@@ -17,6 +17,7 @@ from django.urls import path
 
 from vokabeltrainer.views.index import IndexView
 from vokabeltrainer.views.lernen import LernenView
+from vokabeltrainer.views.lernen_ergebnis import LernenErgebnisView
 from vokabeltrainer.views.vokabel_set_views import (
     VokabelSetListView, VokabelSetCreateView,
     VokabelSetUpdateView, VokabelSetDeleteView
@@ -31,6 +32,8 @@ urlpatterns = [
 
     path('lernen', LernenView.as_view(), name='lernen'),
     path('lernen/<int:set_id>', LernenView.as_view(), name='lernen'),
+    path('lernen_ergebnis', LernenErgebnisView.as_view(), name='lernen_ergebnis'),
+    path('lernen/<int:set_id>', LernenErgebnisView.as_view(), name='lernen_ergebnis'),
 
     path('vokabel/', VokabelListView.as_view(), name='list_vokabel'),
     path('vokabel/add/', VokabelCreateView.as_view(), name='new_vokabel'),

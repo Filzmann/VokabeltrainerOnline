@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Lernen</h2>
+{{ act_set_id }}
+    <ul>
+        <li><a href="{% url 'lernen' %}">Alle</a></li>
+    {% for set in sets %}
+        <li><a
+                {% if set.id == act_set_id %}
+                    style="font-weight: bolder;"
+                {% endif %}
+                href="{% url 'lernen' set.id %}">{{ set.name }}</a> </li>
+    {% endfor %}
+    </ul>
+
+    <div
+    {% if solution_correct %} style="color:green;"{% else %} style="color:red;" {% endif %}>
+    {{ message_text }}
+    </div>
+    {% if solution_correct %}
+    <h4>
+        Selbstverständlich weißt Du,dass man
+        <span style="font-weight: bolder">"{{ question.question }}"</span>
+
+        mit <span style="font-weight: bolder">{{ question.answer }} </span>übersetzt
+    </h4>
+    <div>
+        <p>hier ein paar schöne Beispielsätze (falls Du welche eingepflegt hast.)</p>
+        <p>{{ question.examples }}</p>
+    </div>
+    {% endif %}
+
+
+
+    {% if not solution_correct %}
+        <p>hier nochmal der Hinweis für Dich. Vielleicht hast Du Dich ja auch nur vertippt?</p>
+        <p>
+            Zur Erinnerung: gesucht wird die Übersetzung von <span style="font-weight: bolder">"{{ question.question }}"</span>
+            nach {{ answer }}
+        </p>
+        <div>
+            {{ question.hint }}
+        </div>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="hidden" name="lang_to_find" value="{{ question.lang_to_find }}">
+            <input type="text" name="answer" placeholder="Antwort eintragen">
+            <input type="submit" value="Prüfen!">
+        </form>
+
+        <div style="border: 1px solid black; max-width: 40em;">
+        <h5><a onclick="$('#hint').show();">Ich komm einfach nicht drauf. Zeig mir die Antwort. </a></h5>
+        <div id="hint">
+            {{ question.answer }}
+        </div>
+    </div>
+    {% endif %}
+
+    <div>
+        {% if act_set_id %}
+            <a href="{% url 'lernen' act_set_id %}">
+        {% else %}
+            <a href="{% url 'lernen' %}">
+        {% endif %}
+            Nächste Frage</a> </div>
+{% endblock %}

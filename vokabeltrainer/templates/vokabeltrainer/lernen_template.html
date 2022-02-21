@@ -13,29 +13,23 @@
                 href="{% url 'lernen' set.id %}">{{ set.name }}</a> </li>
     {% endfor %}
     </ul>
-
-    <div
-            {% if truefalse %}
-                style="color: green;"
-            {% else %}
-                style="color: red;"
-            {% endif %}>{{ truefalse_text }}</div>
     <h4>
         Wie übersetzt man
-        <span style="font-weight: bolder">"{{ question_set.question }}"</span>
-        in <span style="font-weight: bolder">{{ question_set.lang_to_find }} </span>?
+        <span style="font-weight: bolder">"{{ question.question }}"</span>
+        auf <span style="font-weight: bolder">{{ question.lang_to_find }} </span>?
     </h4>
     </p>
     <div style="border: 1px solid black; max-width: 40em;">
         <h5><a onclick="$('#hint').show();">Hinweis einblenden</a></h5>
         <div id="hint">
-            {{ question_set.hint }}
+            {{ question.hint }}
         </div>
     </div>
 
-    <form method="post" action="">
+    <form method="post" action="{% url "lernen_ergebnis" %}">
         {% csrf_token %}
-        <input type="hidden" name="question_set" value="{{ question_set }}">
+        <input type="hidden" name="question_id" value="{{ question.id }}">
+        <input type="hidden" name="lang_to_find" value="{{ question.lang_to_find }}">
         <input type="text" name="answer" placeholder="Antwort eintragen">
         <input type="submit" value="Prüfen!">
     </form>
