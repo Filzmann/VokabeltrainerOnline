@@ -3,9 +3,13 @@
 {% block content %}
 {% include "vokabeltrainer/lernen_menu.html" %}
     <h4>
-        Wie übersetzt man
+        Was heißt
         <span style="font-weight: bolder">"{{ question.question }}"</span>
-        auf <span style="font-weight: bolder">{{ question.lang_to_find }} </span>?
+        auf
+        <span style="font-weight: bolder">
+            {% if question.lang_to_find == 'german' %}
+            deutsch
+            {% else %} englisch {% endif %}</span>?
     </h4>
     </p>
     <div style="border: 1px solid black; max-width: 40em;">
