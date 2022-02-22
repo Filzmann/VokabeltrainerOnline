@@ -25,7 +25,7 @@ class LobUndAufmunterung(Model):
         choices=CHOICES,
         default=LOB,
     )
-    text = TextField(default='')
+    text = HTMLField(default='')
 
     @classmethod
     def get_random(cls, l_type):

@@ -21,29 +21,31 @@
     {% if solution_correct %}
         <div style="color:green; max-width: 18em;">{{ message_text|safe }}</div>
     <h4>
-        Selbstverständlich weißt Du,dass man
         <span style="font-weight: bolder">"{{ question.question }}"</span>
-
-        mit <span style="font-weight: bolder">{{ question.answer }} </span>übersetzt
+         =
+        <span style="font-weight: bolder">{{ question.answer }} </span>
     </h4>
     <div>
-        <p>hier ein paar schöne Beispielsätze (falls Du welche eingepflegt hast.)</p>
-        <p>{{ question.examples }}</p>
+        <p>{{ question.examples|safe }}</p>
     </div>
     {% endif %}
 
 
 
     {% if not solution_correct %}
-        <div style="color:red; max-width:18em;">{{ message_text|safe }}</div>
-        <p>hier nochmal der Hinweis für Dich. Vielleicht hast Du Dich ja auch nur vertippt?</p>
+        <div style="color:red; max-width:18em;">{{ message_text }}</div>
         <p>
-            Zur Erinnerung: gesucht wird die Übersetzung von <span style="font-weight: bolder">"{{ question.question }}"</span>
-            nach {{ answer }}
+            <span style="font-weight: bolder">"{{ question.question }}"</span> auf {{ question.lang_to_find }} = ???
         </p>
         <div>
-            {{ question.hint }}
+            {{ question.hint|safe }}
         </div>
+        {% if question.lang_to_find == 'deutsch' %}
+            <div>
+            Bsp.:
+            {{ question.examples|safe }}
+            </div>
+        {% endif %}
 
         <form method="post" action="">
             {% csrf_token %}
