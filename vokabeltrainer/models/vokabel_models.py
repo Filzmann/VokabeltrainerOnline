@@ -1,30 +1,31 @@
 import random
 
-from django.db import models
+from django.db.models import Model, CharField, ManyToManyField, TextField
+from tinymce.models import HTMLField
 
 
 # Create your models here.
 
-class VokabelSet(models.Model):
-    name = models.CharField(max_length=255)
+class VokabelSet(Model):
+    name = CharField(max_length=255)
 
     def __str__(self):
         return self.name
 
 
-class LobUndAufmunterung(models.Model):
+class LobUndAufmunterung(Model):
     LOB = 'LO'
     AUF = 'AU'
     CHOICES = [
         (LOB, 'Lob für richtiges Ergebnis'),
         (AUF, 'Aufmunterung bei falschem Ergebnis'),
     ]
-    type = models.CharField(
+    type = CharField(
         max_length=2,
         choices=CHOICES,
         default=LOB,
     )
-    text = models.TextField(default='')
+    text = TextField(default='')
 
     @classmethod
     def get_random(cls, l_type):
@@ -34,12 +35,12 @@ class LobUndAufmunterung(models.Model):
         return random.sample(liste, 1)[0]
 
 
-class Vokabel(models.Model):
-    english = models.CharField(max_length=255)
-    german = models.CharField(max_length=255)
-    english_description = models.TextField(default='')
-    example_sentences = models.TextField(default='')
-    vokabel_sets = models.ManyToManyField(to=VokabelSet, related_name='vokabeln', null=True, blank=True)
+class Vokabel(Model):
+    english = CharField(max_length=255)
+    german = CharField(max_length=255)
+    english_description = HTMLField(default='')
+    example_sentences = HTMLField(default='')
+    vokabel_sets = ManyToManyField(to=VokabelSet, related_name='vokabeln', null=True, blank=True)
 
     def __str__(self):
         return f'{self.english} - {self.german}'
