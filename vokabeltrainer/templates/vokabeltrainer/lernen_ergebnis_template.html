@@ -1,62 +1,64 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block sitetitle %}
+    Lernen
+{% endblock %}
+
+{%  block heading %}
     {% include "vokabeltrainer/lernen_menu.html" %}
+{% endblock %}
 
-    <div
-    {% if solution_correct %} style="color:green;"{% else %} style="color:red;" {% endif %}>
-
-    </div>
-    {% if solution_correct %}
-        <div style="color:green; max-width: 18em;">{{ message_text|safe }}</div>
-    <h4>
-        <span style="font-weight: bolder">"{{ question.question }}"</span>
-         =
-        <span style="font-weight: bolder">{{ question.answer }} </span>
-    </h4>
-    <div>
-        <p>{{ question.examples|safe }}</p>
-    </div>
-    {% endif %}
-
-
-
-    {% if not solution_correct %}
-        <div style="color:red; max-width:18em;">{{ message_text }}</div>
-        <p>
-            <span style="font-weight: bolder">"{{ question.question }}"</span> auf {{ question.lang_to_find }} = ???
-        </p>
-        <div>
-            {{ question.hint|safe }}
-        </div>
-        {% if question.lang_to_find == 'german' %}
-            <div>
-            Bsp.:
-            {{ question.examples|safe }}
+{% block content %}
+    <div class="panel">
+        <div class="panel-heading text-center">
+            <div  {% if solution_correct %} style="color:green;"{% else %} style="color:red;" {% endif %}>
+                {{ message_text|safe }}
+                <div>
+                    {% if solution_correct %}
+                    <span style="font-weight: bolder">"{{ question.question }}"="{{ question.answer }}" </span>
+                    {% endif %}
+                </div>
             </div>
-        {% endif %}
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4">
+                {%  if not solution_correct %}
+                    {% include "vokabeltrainer/lernen_form.html"%}
+                {% endif %}
+                <div>
 
-        <form method="post" action="">
-            {% csrf_token %}
-            <input type="hidden" name="question_id" value="{{ question.id }}">
-            <input type="hidden" name="lang_to_find" value="{{ question.lang_to_find }}">
-            <input type="text" name="answer" placeholder="Antwort eintragen">
-            <input type="submit" value="Prüfen!">
-        </form>
+                    <a class="btn btn-success"
+                        href="{% if act_set_id %}{% url 'lernen' act_set_id %}{% else %}{% url 'lernen' %}{% endif %}">
+                        Nächste Frage
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                {% if solution_correct or question.lang_to_find == 'german'%}
+                    <div>
+                        {{ question.hint|safe }}
+                    </div>
+                    <div>
+                        Bsp.:
+                        {{ question.examples|safe }}
+                    </div>
+                {% endif %}
+                {%  if not solution_correct %}
+                    <a class="btn btn-danger" onclick="$('#hint').show();">Antwort anzeigen. </a>
+                    <div id="hint">
+                        {{ question.answer }}
+                    </div>
+                {% endif %}
 
-        <div style="border: 1px solid black; max-width: 40em;">
-        <h5><a onclick="$('#hint').show();">Ich komm einfach nicht drauf. Zeig mir die Antwort. </a></h5>
-        <div id="hint">
-            {{ question.answer }}
+
+            </div>
+
+
         </div>
     </div>
-    {% endif %}
 
-    <div>
-        {% if act_set_id %}
-            <a href="{% url 'lernen' act_set_id %}">
-        {% else %}
-            <a href="{% url 'lernen' %}">
-        {% endif %}
-            Nächste Frage</a> </div>
+
+
+
+
 {% endblock %}

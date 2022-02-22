@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-
+{% block sitetitle %}
+    Vokabelgruppe - neu / edit
+{% endblock %}
 {% block content %}
-    <h2>Vokabelset        neu / edit</h2>
+
     <form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
