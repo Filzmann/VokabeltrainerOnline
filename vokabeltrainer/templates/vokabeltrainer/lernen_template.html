@@ -1,18 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Lernen</h2>
-{{ act_set_id }}
-    <ul>
-        <li><a href="{% url 'lernen' %}">Alle</a></li>
-    {% for set in sets %}
-        <li><a
-                {% if set.id == act_set_id %}
-                    style="font-weight: bolder;"
-                {% endif %}
-                href="{% url 'lernen' set.id %}">{{ set.name }}</a> </li>
-    {% endfor %}
-    </ul>
+{% include "vokabeltrainer/lernen_menu.html" %}
     <h4>
         Wie übersetzt man
         <span style="font-weight: bolder">"{{ question.question }}"</span>

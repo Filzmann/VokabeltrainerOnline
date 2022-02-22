@@ -1,0 +1,23 @@
+<nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div id="navbar" class="navbar-collapse collapse">
+                {% if user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="navbar-brand">Lernen</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">Vokabelgruppe auswählen <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{% url 'lernen' %}">Alle</a></li>
+                                {% for set in sets %}
+                                    <li>
+                                        <a href="{% url 'lernen' set.id %}">{{ set.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div><!--/.navbar-collapse -->
+        </div>
+    </nav>
