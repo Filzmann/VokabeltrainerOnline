@@ -16,6 +16,12 @@
         <h5><a onclick="$('#hint').show();">Hinweis einblenden</a></h5>
         <div id="hint">
             {{ question.hint }}
+            {% if question.lang_to_find == 'german' %}
+            <div>
+            Bsp.:
+            {{ question.examples|safe }}
+            </div>
+        {% endif %}
         </div>
     </div>
 
