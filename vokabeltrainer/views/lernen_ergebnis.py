@@ -42,7 +42,8 @@ class LernenErgebnisView(TemplateView):
             context['solution_correct'] = False
             message = LobUndAufmunterung.get_random(l_type='AU')
             context['message_text'] = message.text
-            vokabel.add_wrong()
+            if self.request.POST['count_this'] == '1':
+                vokabel.add_wrong()
 
         context['question'] = {
             'id': vokabel.id,

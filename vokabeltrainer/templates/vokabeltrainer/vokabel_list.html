@@ -10,13 +10,16 @@
         <li><a href="{% url 'new_vokabel' %}">Neue Vokabel dazu</a>
 </li>
         {% for vokabel in words_to_learn %}
-            <li><a href="{% url 'update_vokabel' vokabel.id %}">
+            <li>
+                <a href="{% url 'update_vokabel' vokabel.id %}">
                 <span class="bold">{{ vokabel.english }}</span>
                 (
                     {% for set in vokabel.vokabel_sets.all %}
                         {{ set }},
                     {% endfor %}
                 )
+                 - correct: {{ vokabel.correct_answers }} - wrong: {{ vokabel.wrong_answers }}
+
             </a></li>
         {% endfor %}
     </ul>
