@@ -44,8 +44,8 @@
                     </div>
                 {% endif %}
                 {%  if not solution_correct %}
-                    <a class="btn btn-danger" onclick="$('#hint').show();">Antwort anzeigen. </a>
-                    <div id="hint">
+                    <a class="btn btn-danger" onclick="show_answer()">Antwort anzeigen. </a>
+                    <div id="answer">
                         {{ question.answer }}
                     </div>
                 {% endif %}

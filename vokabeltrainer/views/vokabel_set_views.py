@@ -7,6 +7,7 @@ from vokabeltrainer.models.vokabel_models import VokabelSet
 class VokabelSetListView(ListView):
     model = VokabelSet
     context_object_name = 'vokabel_set_list'
+    ordering = 'name'
 
 
 class VokabelSetCreateView(CreateView):

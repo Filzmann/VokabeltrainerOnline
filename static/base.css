@@ -22,3 +22,7 @@ form a, input, button, .btn
 {
     margin: 0.5em;
 }
+#answer,#hint
+{
+    display:none;
+}

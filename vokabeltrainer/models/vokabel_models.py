@@ -1,6 +1,6 @@
 import random
 import django.db.models as models
-from django.db.models import Model, CharField, ManyToManyField, TextField, IntegerField
+from django.db.models import Model, CharField, ManyToManyField, TextField, IntegerField, F
 from tinymce.models import HTMLField
 
 
@@ -53,28 +53,24 @@ class Vokabel(Model):
             query = cls.objects.filter(vokabel_sets=vokabel_set)
         else:
             query = cls.objects.all()
+        query = query.annotate(
+                rank=F('wrong_answers')-F('correct_answers')
+            ).order_by('-rank')[:10]
+
+        # print(query)
         liste = list(query)
-        random_liste = random.sample(liste, 10)
-
-        # größtes falsch - richtig ermitteln
-        max_delta = 0
-        act_vok = None
-        while len(random_liste) > 0:
-            vok = random_liste.pop(0)
-            print(vok)
-            if vok.get_diff() > max_delta:
-                max_delta = vok.get_diff()
-                act_vok = vok
-
-        return act_vok
+        for elem in liste:
+            print(f'{elem.rank} - {elem}')
+        return random.sample(liste, 1)[0]
 
     def add_correct(self):
+        print(f'add_right {self}')
         self.correct_answers += 1
         self.save()
 
     def add_wrong(self):
+        print(f'add_wrong {self}')
         self.wrong_answers += 1
         self.save()
 
-    def get_diff(self):
-        return self.wrong_answers - self.correct_answers
+

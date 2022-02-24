@@ -24,7 +24,7 @@
                 {% include "vokabeltrainer/lernen_form.html"%}
             </div>
             <div class="col-md-8">
-                <a class="btn btn-danger" onclick="$('#hint').show();">Hinweis einblenden</a>
+                <a class="btn btn-success" onclick="$('#hint').show();">Hinweis einblenden</a>
                 <div id="hint">
                     {{ question.hint|safe }}
                     {% if question.lang_to_find == 'german' %}
@@ -32,6 +32,12 @@
                         {{ question.examples|safe }}
                         </div>
                     {% endif %}
+                </div>
+                <div>
+                    <a class="btn btn-danger" onclick="show_answer()">Antwort anzeigen. </a>
+                    <div id="answer">
+                        {{ question.answer }}
+                    </div>
                 </div>
             </div>
 

@@ -27,7 +27,6 @@ class LernenView(TemplateView):
             self.vokabel = Vokabel.get_random(vokabel_set=self.vokabel_set_id)
         else:
             self.vokabel = Vokabel.get_random()
-        print(self.vokabel.id)
         # neue Frage erstellen
         muenze = randrange(2)
         self.question = {
@@ -36,6 +35,7 @@ class LernenView(TemplateView):
             'hint': self.vokabel.english_description,
             'answer': self.vokabel.english if muenze==0 else self.vokabel.german,
             'lang_to_find': 'english' if muenze == 0 else 'german',
+            'count_this': 1,
         }
 
         context['truefalse'] = False

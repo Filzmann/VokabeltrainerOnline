@@ -7,6 +7,7 @@ from vokabeltrainer.models.vokabel_models import Vokabel
 class VokabelListView(ListView):
     model = Vokabel
     context_object_name = 'words_to_learn'
+    ordering = 'english'
 
 
 class VokabelCreateView(CreateView):
