@@ -1,6 +1,6 @@
 import random
-
-from django.db.models import Model, CharField, ManyToManyField, TextField
+import django.db.models as models
+from django.db.models import Model, CharField, ManyToManyField, TextField, IntegerField
 from tinymce.models import HTMLField
 
 
@@ -41,6 +41,8 @@ class Vokabel(Model):
     english_description = HTMLField(default='')
     example_sentences = HTMLField(default='')
     vokabel_sets = ManyToManyField(to=VokabelSet, related_name='vokabeln', null=True, blank=True)
+    correct_answers = IntegerField(default=0)
+    wrong_answers = IntegerField(default=0)
 
     def __str__(self):
         return f'{self.english} - {self.german}'
@@ -52,5 +54,27 @@ class Vokabel(Model):
         else:
             query = cls.objects.all()
         liste = list(query)
+        random_liste = random.sample(liste, 10)
 
-        return random.sample(liste, 1)[0]
+        # größtes falsch - richtig ermitteln
+        max_delta = 0
+        act_vok = None
+        while len(random_liste) > 0:
+            vok = random_liste.pop(0)
+            print(vok)
+            if vok.get_diff() > max_delta:
+                max_delta = vok.get_diff()
+                act_vok = vok
+
+        return act_vok
+
+    def add_correct(self):
+        self.correct_answers += 1
+        self.save()
+
+    def add_wrong(self):
+        self.wrong_answers += 1
+        self.save()
+
+    def get_diff(self):
+        return self.wrong_answers - self.correct_answers
