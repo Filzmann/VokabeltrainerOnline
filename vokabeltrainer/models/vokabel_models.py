@@ -49,12 +49,7 @@ class AbstractQuestion(Model):
         query = query.annotate(
             rank=F('wrong_answers') - F('correct_answers')
         ).order_by('-rank')[:10]
-
-        # print(query)
-        liste = list(query)
-        for elem in liste:
-            print(f'{elem.rank} - {elem}')
-        return random.sample(liste, 1)[0]
+        return random.sample(list(query), 1)[0]
 
 
 class Vokabel(AbstractQuestion):
@@ -79,8 +74,8 @@ class Vokabel(AbstractQuestion):
 class InFormal(AbstractQuestion):
     formal = CharField(max_length=255)
     informal = CharField(max_length=255)
-    example_informal = HTMLField(default='')
-    example_formal = HTMLField(default='')
+    hint_informal = HTMLField(default='')
+    hint_formal = HTMLField(default='')
 
     def __str__(self):
         return f'{self.formal} - {self.informal}'

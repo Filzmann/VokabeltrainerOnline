@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block sitetitle %}
+    Lerne formelle und informelle Formulierungen
+{% endblock %}
+
+{% block content %}
+    <div class="panel">
+        <div class="panel-heading text-center">
+            <div  {% if solution_correct %} style="color:green;"{% else %} style="color:red;" {% endif %}>
+                {{ message_text|safe }}
+                <div>
+                    {% if solution_correct %}
+                    <span style="font-weight: bolder">"{{ question.question }}"="{{ question.answer }}" </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4">
+                {%  if not solution_correct %}
+                   <form method="post"
+                         action="{% url "lern_informal_ergebnis" %}" id="lernen_form">
+                       {% csrf_token %}
+                       <input type="hidden" name="question_id"
+                              value="{{ question.id }}">
+                       <input type="hidden" name="to_find"
+                              value="{{ question.to_find }}">
+                       <input type="hidden" name="count_this"
+                              value="{{ question.count_this }}" id="count_this">
+                       <input class="form-control" type="text"
+                              name="answer" placeholder="Antwort eintragen"
+                              autocomplete="off">
+                       <input class="btn btn-primary"type="submit"
+                              value="Prüfen!">
+                   </form>
+                {% endif %}
+                <div>
+
+                    <a class="btn btn-success"
+                        href="{% url 'lern_informal' %}">
+                        Nächste Frage
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                {% if solution_correct or question.lang_to_find == 'german'%}
+                    <div>
+                        {{ question.hint|safe }}
+                    </div>
+
+                {% endif %}
+                {%  if not solution_correct %}
+                    <a class="btn btn-danger" onclick="show_answer()">Antwort anzeigen. </a>
+                    <div id="answer">
+                        {{ question.answer }}
+                    </div>
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

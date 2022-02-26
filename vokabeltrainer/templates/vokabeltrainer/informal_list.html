@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block sitetitle %}
+    Formelle und informelle Ausdrücke
+{% endblock %}
+
+{% block content %}
+
+    <ul>
+        <li><a href="{% url 'new_in_formal' %}">Neues Formell-informell-Paar dazu</a>
+</li>
+        {% for in_formal in in_formals_to_learn %}
+            <li>
+                <a href="{% url 'update_in_formal' in_formal.id %}">
+                <span class="bold">{{ in_formal.informal }}</span>
+                - correct: {{ vokabel.correct_answers }} - wrong: {{ vokabel.wrong_answers }}
+            </a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

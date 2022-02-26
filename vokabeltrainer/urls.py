@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.urls import path
 
+from vokabeltrainer.views.in_formal_views import InFormalListView, InFormalCreateView, InFormalUpdateView, \
+    InFormalDeleteView
 from vokabeltrainer.views.index import IndexView
+from vokabeltrainer.views.lern_informals import LernInformalView, LernInformalErgebnisView
 from vokabeltrainer.views.lernen import LernenView
-from vokabeltrainer.views.lernen_ergebnis import LernenErgebnisView
+from vokabeltrainer.views.lernen import LernenErgebnisView
 from vokabeltrainer.views.lob_und_aufmunterung_views import (
     LobUndAufmunterungListView, LobUndAufmunterungCreateView,
     LobUndAufmunterungUpdateView, LobUndAufmunterungDeleteView)
@@ -30,13 +33,22 @@ from vokabeltrainer.views.vokabel_views import (
     VokabelUpdateView, VokabelDeleteView
 )
 
+
+
+
+
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
 
     path('lernen', LernenView.as_view(), name='lernen'),
     path('lernen/<int:set_id>', LernenView.as_view(), name='lernen'),
     path('lernen_ergebnis', LernenErgebnisView.as_view(), name='lernen_ergebnis'),
-    path('lernen/<int:set_id>', LernenErgebnisView.as_view(), name='lernen_ergebnis'),
+    path('lernen_ergebnis/<int:set_id>', LernenErgebnisView.as_view(), name='lernen_ergebnis'),
+
+    path('lern_informal', LernInformalView.as_view(), name='lern_informal'),
+    path('lern_informal_ergebnis', LernInformalErgebnisView.as_view(), name='lern_informal_ergebnis'),
+    path('lern_informal_ergebnis/<int:set_id>', LernInformalErgebnisView.as_view(), name='lern_informal_ergebnis'),
+
 
     path('vokabel/', VokabelListView.as_view(), name='list_vokabel'),
     path('vokabel/add/', VokabelCreateView.as_view(), name='new_vokabel'),
@@ -52,4 +64,10 @@ urlpatterns = [
     path('lob/add/', LobUndAufmunterungCreateView.as_view(), name='new_lob'),
     path('lob/<int:pk>/', LobUndAufmunterungUpdateView.as_view(), name='update_lob'),
     path('lob/<int:pk>/delete/', LobUndAufmunterungDeleteView.as_view(), name='delete_lob'),
+
+    path('in_formal/', InFormalListView.as_view(), name='list_in_formal'),
+    path('in_formal/add/', InFormalCreateView.as_view(), name='new_in_formal'),
+    path('in_formal/<int:pk>/', InFormalUpdateView.as_view(), name='update_in_formal'),
+    path('in_formal/<int:pk>/delete/', InFormalDeleteView.as_view(), name='delete_in_formal'),
+
 ]

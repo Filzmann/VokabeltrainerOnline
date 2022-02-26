@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block sitetitle %}
+    Lerne Formelle und Informelle Formulierungen
+{% endblock %}
+
+
+{% block content %}
+    <div class="panel">
+        <div class="panel-heading text-center" >
+            Was ist die
+            <span style="font-weight: bolder">
+            {% if question.to_find == 'formal' %}
+                formelle
+            {% else %}
+                informelle
+            {% endif %}
+            </span>
+            Formulierung von
+            <span style="font-weight: bolder">"{{ question.question }}"</span>
+            ?
+        </div>
+        <div class="panel-body">
+            <div class="col-md-4">
+                {%  if not solution_correct %}
+                   <form method="post"
+                         action="{% url "lern_informal_ergebnis" %}" id="lernen_form">
+                       {% csrf_token %}
+                       <input type="hidden" name="question_id"
+                              value="{{ question.id }}">
+                       <input type="hidden" name="to_find"
+                              value="{{ question.to_find }}">
+                       <input type="hidden" name="count_this"
+                              value="{{ question.count_this }}" id="count_this">
+                       <input class="form-control" type="text"
+                              name="answer" placeholder="Antwort eintragen"
+                              autocomplete="off">
+                       <input class="btn btn-primary"type="submit"
+                              value="Prüfen!">
+                   </form>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <a class="btn btn-success" onclick="$('#hint').show();">Hinweis einblenden</a>
+                <div id="hint">
+                    {{ question.hint|safe }}
+                    {% if question.lang_to_find == 'german' %}
+                        <div>
+                        {{ question.examples|safe }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <a class="btn btn-danger" onclick="show_answer()">Antwort anzeigen. </a>
+                    <div id="answer">
+                        {{ question.answer }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
